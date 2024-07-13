@@ -6,7 +6,6 @@
   "scripts": {
     "build": "rimraf dist && tsc",
     "watch": "rimraf dist && tsc -w",
-    "prepublish": "npm run build",
     "test": "jest"
   },
   "keywords": [
