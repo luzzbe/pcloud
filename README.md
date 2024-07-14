@@ -2,6 +2,8 @@
 
 PCloudClient is a TypeScript library for interacting with the pCloud API. It provides a simple and intuitive interface to perform operations such as listing files and folders, uploading files, and more.
 
+**Disclaimer: This is an unofficial library and is not supported or endorsed by pCloud. Use it at your own risk.**
+
 ## Features
 
 - Easy authentication with pCloud API using OAuth access tokens
