@@ -131,7 +131,13 @@ Lists folders and files in a specified folder.
 ##### uploadFile
 
 ```typescript
-uploadFile(folderId: number, fileName: string, fileContent: Buffer): Promise<any>
+uploadFile(folderId: number, fileName: string, fileContent: Buffer, options?: {
+  noPartial?: boolean;
+  progressHash?: string;
+  renameIfExists?: boolean;
+  mtime?: number;
+  ctime?: number;
+}): Promise<any>
 ```
 
 Uploads a file to a specified folder.
@@ -139,6 +145,12 @@ Uploads a file to a specified folder.
 - `folderId`: ID of the folder to upload the file to
 - `fileName`: Name of the file to upload
 - `fileContent`: Content of the file to upload (as a Buffer)
+- `options`: (Optional) Additional upload options
+  - `noPartial`: If true, partially uploaded files will not be saved
+  - `progressHash`: Hash used for observing upload progress
+  - `renameIfExists`: If true, the uploaded file will be renamed if a file with the requested name exists in the folder
+  - `mtime`: If set, file modified time is set (Unix timestamp in seconds)
+  - `ctime`: If set, file created time is set. Requires `mtime` to be set as well (Unix timestamp in seconds)
 
 ### Authentication Helper Functions
 
