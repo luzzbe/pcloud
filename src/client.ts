@@ -125,4 +125,63 @@ export class PCloudClient {
 
     return this.request("POST", `/uploadfile?${params.toString()}`, formData);
   }
+
+  /**
+   * Creates a new folder.
+   * @param folderId ID of the parent folder where the new folder will be created.
+   * @param name Name of the new folder.
+   */
+  async createFolder(folderId: number, name: string): Promise<any> {
+    const params = new URLSearchParams({
+      folderid: folderId.toString(),
+      name: name,
+    });
+
+    return this.request("GET", `/createfolder?${params.toString()}`);
+  }
+
+  /**
+   * Deletes a folder recursively.
+   * @param folderId ID of the folder to delete.
+   */
+  async deleteFolderRecursive(folderId: number): Promise<any> {
+    const params = new URLSearchParams({
+      folderid: folderId.toString(),
+    });
+
+    return this.request("GET", `/deletefolderrecursive?${params.toString()}`);
+  }
+
+  /**
+   * Renames and/or moves a folder.
+   * @param folderId ID of the folder to rename/move.
+   * @param options Options for renaming/moving the folder.
+   *  - options.toFolderId ID of the destination folder (optional).
+   *  - options.toName New name for the folder (optional).
+   *  - options.toPath New path for the folder (optional). If it's an existing folder to place the source folder without a new name, it MUST end with a slash (/).
+   */
+  async renameFolder(
+    folderId: number,
+    options: {
+      toFolderId?: number;
+      toName?: string;
+      toPath?: string;
+    }
+  ): Promise<any> {
+    const params = new URLSearchParams({
+      folderid: folderId.toString(),
+    });
+
+    if (options.toFolderId) {
+      params.append("tofolderid", options.toFolderId.toString());
+    }
+    if (options.toName) {
+      params.append("toname", options.toName);
+    }
+    if (options.toPath) {
+      params.append("topath", options.toPath);
+    }
+
+    return this.request("GET", `/renamefolder?${params.toString()}`);
+  }
 }

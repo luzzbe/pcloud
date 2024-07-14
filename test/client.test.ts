@@ -40,6 +40,52 @@ describe("PCloudClient", () => {
     });
   });
 
+  describe("Folder operations", () => {
+    let createdFolderId: number;
+    const parentFolderId = 0; // Root folder
+    const originalFolderName = `test-folder-${Date.now()}`; // Unique folder name
+    const newFolderName = `renamed-${originalFolderName}`;
+
+    it("should create a folder", async () => {
+      const createResult = await client.createFolder(
+        parentFolderId,
+        originalFolderName
+      );
+      expect(createResult.metadata.name).toBe(originalFolderName);
+      createdFolderId = createResult.metadata.folderid;
+    });
+
+    it("should rename a folder", async () => {
+      // Assuming the folder was created in the previous test
+      const renameResult = await client.renameFolder(createdFolderId, {
+        toName: newFolderName,
+      });
+      expect(renameResult.metadata.name).toBe(newFolderName);
+      expect(renameResult.metadata.folderid).toBe(createdFolderId);
+
+      // Verify the folder was renamed
+      const listResult = await client.listFolders(parentFolderId);
+      const renamedFolder = listResult.metadata.contents.find(
+        (item: any) => item.folderid === createdFolderId
+      );
+      expect(renamedFolder).toBeDefined();
+      expect(renamedFolder.name).toBe(newFolderName);
+    });
+
+    it("should delete a folder", async () => {
+      // Clean up: Delete the folder
+      await client.deleteFolderRecursive(createdFolderId);
+
+      // Verify the folder is deleted
+      try {
+        await client.listFolders(createdFolderId);
+        fail("Expected an error, but the folder still exists");
+      } catch (error) {
+        expect(error).toBeDefined();
+      }
+    });
+  });
+
   describe("error handling", () => {
     it("should throw PCloudError for API errors", async () => {
       const folderId = -1; // Invalid folder ID

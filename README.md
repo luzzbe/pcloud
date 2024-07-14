@@ -152,6 +152,41 @@ Uploads a file to a specified folder.
   - `mtime`: If set, file modified time is set (Unix timestamp in seconds)
   - `ctime`: If set, file created time is set. Requires `mtime` to be set as well (Unix timestamp in seconds)
 
+##### createFolder
+
+```typescript
+createFolder(folderId: number, name: string): Promise<any>
+```
+
+Create a folder in a specified parent folder.
+
+- `folderId`: ID of the parent folder where the new folder will be created
+- `name`: Name of the new folder
+
+##### deleteFolderRecursive
+
+```typescript
+deleteFolderRecursive(folderId: number): Promise<any>
+```
+
+Deletes a folder recursively.
+
+- `folderId`: ID of the folder to delete
+
+##### renameFolder
+
+```typescript
+renameFolder(folderId: number): Promise<any>
+```
+
+Renames and/or moves a folder.
+
+- `folderId`: ID of the folder to delete
+- `options`: (Optional) Options for renaming/moving the folder
+  - `toFolderId`: ID of the destination folder
+  - `toName`: New name for the folder
+  - `toPath`: New path for the folder
+
 ### Authentication Helper Functions
 
 These functions are not part of the PCloudClient class but are provided to help with the OAuth authentication process.
