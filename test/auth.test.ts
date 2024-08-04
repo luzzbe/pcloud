@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-import { getOAuthUrl, getAccessToken } from "../src/auth";
+import { getOAuthUrl } from "../src/auth";
 
 config();
 

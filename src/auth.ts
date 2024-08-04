@@ -1,6 +1,6 @@
 import axios from "axios";
 import { PCloudError } from "./errors";
-import { ApiError, ApiResponse } from "./types";
+import { ApiResponse } from "./types";
 import { isApiError } from "./utils";
 import { ApiEndpoint } from "./enums/ApiEndpoint";
 

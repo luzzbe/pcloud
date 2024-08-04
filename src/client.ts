@@ -32,22 +32,18 @@ export class PCloudClient {
    * @param data Optional data to send with the request (for POST requests).
    */
   private async request(method: string, url: string, data?: any): Promise<any> {
-    try {
-      const response = await this.axiosInstance.request<ApiResponse>({
-        method,
-        url,
-        data,
-      });
+    const response = await this.axiosInstance.request<ApiResponse>({
+      method,
+      url,
+      data,
+    });
 
-      // Check if result is non-zero, indicating an error
-      if (isApiError(response.data)) {
-        throw new PCloudError(response.data.result, response.data.error);
-      }
-
-      return response.data;
-    } catch (error) {
-      throw error; // Throw the original error as-is
+    // Check if result is non-zero, indicating an error
+    if (isApiError(response.data)) {
+      throw new PCloudError(response.data.result, response.data.error);
     }
+
+    return response.data;
   }
 
   /**
